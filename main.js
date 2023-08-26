@@ -1,7 +1,7 @@
-
-let carrito =[];
 const contenedor = document.getElementById("container");
 const carritoCompras =document.getElementById("carritoCompras");
+
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 const stockLibros =[
     {id: 1, nombre: 'El pecador de Oxford', precio: 7000},
@@ -19,6 +19,7 @@ let librosStorage=JSON.parse(getLibros);
 
 librosStorage.forEach((libro) => {
     let div= document.createElement("div");
+    div.className= "div-color";
     div.innerHTML= `
     <h2>Nombre: ${libro.nombre}</h2>
     <p>Precio: ${libro.precio}</p>
@@ -27,6 +28,7 @@ librosStorage.forEach((libro) => {
 
     let boton= document.createElement("button");
     boton.innerText= "Agregar al carrito";
+    boton.className= "boton";
     div.append(boton);
 
     boton.addEventListener("click", () =>{
@@ -42,20 +44,29 @@ librosStorage.forEach((libro) => {
 });
 
 function actualizarCarrito() {
-    carritoCompras.innerHTML = "";
+    carritoCompras.innerHTML = "<h2>Carrito</h2>";
     carrito.forEach((libro) => {
     let div = document.createElement("div");
     div.innerHTML = `
-    <h2>Nombre: ${libro.nombre}</h2>
+    <h3>Nombre: ${libro.nombre}</h3>
     <p>Precio: ${libro.precio}</p>
     `;
     carritoCompras.append(div);
     });
+
+    const total= carrito.reduce((acum, item) => acum + item.precio, 0);
+
+    const totalCompra= document.createElement("h3");
+    totalCompra.innerHTML =`TOTAL: $${total}`;
+    carritoCompras.append(totalCompra);
 }
 
 const carritoStorage = () =>{
     localStorage.setItem("carrito", JSON.stringify(carrito));
-}
+};
+
+actualizarCarrito();
+
 
 
 
