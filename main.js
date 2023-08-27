@@ -19,7 +19,7 @@ let librosStorage=JSON.parse(getLibros);
 
 librosStorage.forEach((libro) => {
     let div= document.createElement("div");
-    div.className= "div-color";
+    div.className= "div-style";
     div.innerHTML= `
     <h2>Nombre: ${libro.nombre}</h2>
     <p>Precio: ${libro.precio}</p>
@@ -52,6 +52,14 @@ function actualizarCarrito() {
     <p>Precio: ${libro.precio}</p>
     `;
     carritoCompras.append(div);
+    
+    const eliminar =document.createElement("button");
+    eliminar.innerHTML = "Eliminar";
+    carritoCompras.append(eliminar);
+
+    eliminar.addEventListener("click", () =>{
+        eliminarLibro(libro.id);
+    });
     });
 
     const total= carrito.reduce((acum, item) => acum + item.precio, 0);
@@ -59,13 +67,21 @@ function actualizarCarrito() {
     const totalCompra= document.createElement("h3");
     totalCompra.innerHTML =`TOTAL: $${total}`;
     carritoCompras.append(totalCompra);
-}
+};
+
+const eliminarLibro = (id) =>{
+    const findId= carrito.find((libro) => libro.id === id);
+    console.log(findId);
+    const carritoFiltrado = carrito.filter((libro) => libro.id !== findId);
+    console.log(carritoFiltrado);
+};
 
 const carritoStorage = () =>{
     localStorage.setItem("carrito", JSON.stringify(carrito));
 };
 
 actualizarCarrito();
+
 
 
 
