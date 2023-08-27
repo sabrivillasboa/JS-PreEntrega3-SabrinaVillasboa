@@ -67,13 +67,14 @@ function actualizarCarrito() {
     const totalCompra= document.createElement("h3");
     totalCompra.innerHTML =`TOTAL: $${total}`;
     carritoCompras.append(totalCompra);
+
 };
 
 const eliminarLibro = (id) =>{
-    const findId= carrito.find((libro) => libro.id === id);
-    console.log(findId);
-    const carritoFiltrado = carrito.filter((libro) => libro.id !== findId);
-    console.log(carritoFiltrado);
+    carrito = carrito.filter((libro) => libro.id !== id);
+    console.log(carrito);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    actualizarCarrito();
 };
 
 const carritoStorage = () =>{
@@ -81,6 +82,7 @@ const carritoStorage = () =>{
 };
 
 actualizarCarrito();
+
 
 
 
